@@ -1,0 +1,44 @@
+# How It Works
+
+In short:
+
+- Buildkits encapsulate metadata about the package-building process.
+- When a buildkit sees creation or updates within the [buildkit GitHub repo](https://github.com/pgxman/buildkit), [GitHub Actions](https://github.com/pgxman/buildkit/blob/main/.github/workflows/ci.yaml) builds the package and subsequently publishing it to a designated repository.
+- Invoking `pgxman install` adds pgxman's repository to your system, followed by package installations through your system's native package manager.
+
+## System Compatibility
+
+The backbone of pgxman's build system is your system's package manager.
+At present, `apt`-driven systems such as [Debian Bookworm](https://www.debian.org/releases/bookworm) and [Ubuntu Jammy](https://releases.ubuntu.com/jammy) are fully compatible.
+In the future, other package managers and operating systems will be supported. Currently, we are targeting:
+
+- [x] apt
+- [ ] brew
+- [ ] rpm
+
+## Extension Installation
+
+### Apt
+
+During the extension installation phase, pgxman adds its Apt repository to your system, enabling the installation of extension packages.
+pgxman handles dependency management, installation, and uninstallation through `apt`.
+Moreover, all pgxman packages are marked as 'hold back' with `apt-mark hold`, which prevents them from accidential installations, upgrades, or removals outside of pgxman.
+
+## Buildkits
+
+pgxman uses [a repository of
+buildkits](https://github.com/pgxman/buildkit/tree/main/buildkit) to know what
+extensions are available. When you use `search` or `install`, the buildkit
+metadata is used to obtain information about that extension. A cached copy
+of this repository is stored in the `pgxman` folder in your [user config
+directory](https://pkg.go.dev/os#UserConfigDir).
+
+Each buildkit specifies how to build each extension, and the buildkit build
+system builds it for each package manager. When a buildkit is added or updated,
+a build is conducted automatically (using Github Actions) and the packages are
+stored in pgxman's repository.
+
+## Building a buildkit
+
+`pgxman build` uses Docker to build the buildkit packages locally. The result
+is placed into the `out/` directory in your current working directory.
