@@ -1,14 +1,14 @@
 {
     "name": "pgxman",
     "logo": {
-      "light": "/logo/light.svg",
-      "dark": "/logo/dark.svg"
+      "light": "/logo/light.png",
+      "dark": "/logo/dark.png"
     },
     "favicon": "/favicon.png",
     "colors": {
-      "primary": "#",
-      "light": "#",
-      "dark": "#"
+      "primary": "#FC7D1D",
+      "light": "#FF9443",
+      "dark": "#FC7D1D"
     },
     "topbarCtaButton": {
       "type": "github",
@@ -42,6 +42,7 @@
           "installing-extensions",
           "how-it-works",
           "installing-postgres",
+          "building-an-extension",
           "pgxman-yaml"
         ]
       }
